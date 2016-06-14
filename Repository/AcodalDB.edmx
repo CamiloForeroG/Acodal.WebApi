@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CongresoAcodalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudades">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Departamento" Type="varchar" MaxLength="150" />
+          <Property Name="CodigoPostal" Type="int" />
+        </EntityType>
+        <EntityType Name="Conferencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Fecha" Type="smalldatetime" Nullable="false" />
+          <Property Name="HoraInicio" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="HoraFin" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Salon" Type="int" Nullable="false" />
+          <Property Name="DescripcionDetallada" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Empresas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NIT" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+          <Property Name="RepresentanteLegal" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Ciudad" Type="int" />
+        </EntityType>
+        <EntityType Name="Expositor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Pais" Type="int" Nullable="false" />
+          <Property Name="Titulos" Type="varchar" MaxLength="250" />
+          <Property Name="Descripcion" Type="varchar(max)" />
+          <Property Name="Linked" Type="varchar" MaxLength="250" />
+          <Property Name="Facebook" Type="varchar" MaxLength="250" />
+          <Property Name="Twitter" Type="varchar" MaxLength="250" />
+          <Property Name="PaginaWeb" Type="varchar" MaxLength="250" />
+          <Property Name="Celular" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="ExpositoresXConferencia">
+          <Key>
+            <PropertyRef Name="IdConferencia" />
+            <PropertyRef Name="IdExpositor" />
+          </Key>
+          <Property Name="IdConferencia" Type="int" Nullable="false" />
+          <Property Name="IdExpositor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lugar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lugar" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="50" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pais" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Perfil" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Salon" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Lugar" Type="int" Nullable="false" />
+          <Property Name="CapacidadPersonas" Type="int" Nullable="false" />
+          <Property Name="MesasNegocios" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="150" />
+          <Property Name="Video" Type="bit" Nullable="false" />
+          <Property Name="Audio" Type="bit" Nullable="false" />
+          <Property Name="Otros" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="Empresa" Type="int" />
+          <Property Name="Documento" Type="int" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Perfil" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Conferencia_Salones">
+          <End Role="Salones" Type="Self.Salones" Multiplicity="1" />
+          <End Role="Conferencia" Type="Self.Conferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salones">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferencia">
+              <PropertyRef Name="Salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresas_Ciudades">
+          <End Role="Ciudades" Type="Self.Ciudades" Multiplicity="0..1" />
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudades">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empresas">
+              <PropertyRef Name="Ciudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expositores_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+          <End Role="Expositor" Type="Self.Expositor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expositor">
+              <PropertyRef Name="Pais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExpositoresXConferencia_Conferencias">
+          <End Role="Conferencia" Type="Self.Conferencia" Multiplicity="1" />
+          <End Role="ExpositoresXConferencia" Type="Self.ExpositoresXConferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExpositoresXConferencia">
+              <PropertyRef Name="IdConferencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExpositoresXConferencia_Expositores">
+          <End Role="Expositor" Type="Self.Expositor" Multiplicity="1" />
+          <End Role="ExpositoresXConferencia" Type="Self.ExpositoresXConferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expositor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExpositoresXConferencia">
+              <PropertyRef Name="IdExpositor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Salones_Lugar">
+          <End Role="Lugar" Type="Self.Lugar" Multiplicity="1" />
+          <End Role="Salones" Type="Self.Salones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lugar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Salones">
+              <PropertyRef Name="Lugar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Empresas">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfiles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CongresoAcodalModelStoreContainer">
+          <EntitySet Name="Ciudades" EntityType="Self.Ciudades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conferencia" EntityType="Self.Conferencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expositor" EntityType="Self.Expositor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpositoresXConferencia" EntityType="Self.ExpositoresXConferencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lugar" EntityType="Self.Lugar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfiles" EntityType="Self.Perfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salones" EntityType="Self.Salones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Conferencia_Salones" Association="Self.FK_Conferencia_Salones">
+            <End Role="Salones" EntitySet="Salones" />
+            <End Role="Conferencia" EntitySet="Conferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresas_Ciudades" Association="Self.FK_Empresas_Ciudades">
+            <End Role="Ciudades" EntitySet="Ciudades" />
+            <End Role="Empresas" EntitySet="Empresas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expositores_Pais" Association="Self.FK_Expositores_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Expositor" EntitySet="Expositor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExpositoresXConferencia_Conferencias" Association="Self.FK_ExpositoresXConferencia_Conferencias">
+            <End Role="Conferencia" EntitySet="Conferencia" />
+            <End Role="ExpositoresXConferencia" EntitySet="ExpositoresXConferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExpositoresXConferencia_Expositores" Association="Self.FK_ExpositoresXConferencia_Expositores">
+            <End Role="Expositor" EntitySet="Expositor" />
+            <End Role="ExpositoresXConferencia" EntitySet="ExpositoresXConferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Salones_Lugar" Association="Self.FK_Salones_Lugar">
+            <End Role="Lugar" EntitySet="Lugar" />
+            <End Role="Salones" EntitySet="Salones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Empresas" Association="Self.FK_Usuarios_Empresas">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="Self.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CongresoAcodalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ciudade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Departamento" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="Int32" />
+          <NavigationProperty Name="Empresas" Relationship="Self.FK_Empresas_Ciudades" FromRole="Ciudades" ToRole="Empresas" />
+        </EntityType>
+        <EntityType Name="Conferencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HoraInicio" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoraFin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salon" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionDetallada" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Salone" Relationship="Self.FK_Conferencia_Salones" FromRole="Conferencia" ToRole="Salones" />
+          <NavigationProperty Name="Expositors" Relationship="Self.ExpositoresXConferencia" FromRole="Conferencia" ToRole="Expositor" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NIT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RepresentanteLegal" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ciudad" Type="Int32" />
+          <NavigationProperty Name="Ciudade" Relationship="Self.FK_Empresas_Ciudades" FromRole="Empresas" ToRole="Ciudades" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Empresas" FromRole="Empresas" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Expositor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pais" Type="Int32" Nullable="false" />
+          <Property Name="Titulos" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Linked" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Facebook" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Twitter" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PaginaWeb" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pai" Relationship="Self.FK_Expositores_Pais" FromRole="Expositor" ToRole="Pais" />
+          <NavigationProperty Name="Conferencias" Relationship="Self.ExpositoresXConferencia" FromRole="Expositor" ToRole="Conferencia" />
+        </EntityType>
+        <EntityType Name="Lugar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lugar1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ubicacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Salones" Relationship="Self.FK_Salones_Lugar" FromRole="Lugar" ToRole="Salones" />
+        </EntityType>
+        <EntityType Name="Pai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pais" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Expositors" Relationship="Self.FK_Expositores_Pais" FromRole="Pais" ToRole="Expositor" />
+        </EntityType>
+        <EntityType Name="Perfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Perfiles" FromRole="Perfiles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Salone">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Salon" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lugar" Type="Int32" Nullable="false" />
+          <Property Name="CapacidadPersonas" Type="Int32" Nullable="false" />
+          <Property Name="MesasNegocios" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Video" Type="Boolean" Nullable="false" />
+          <Property Name="Audio" Type="Boolean" Nullable="false" />
+          <Property Name="Otros" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conferencias" Relationship="Self.FK_Conferencia_Salones" FromRole="Salones" ToRole="Conferencia" />
+          <NavigationProperty Name="Lugar1" Relationship="Self.FK_Salones_Lugar" FromRole="Salones" ToRole="Lugar" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Empresa" Type="Int32" />
+          <Property Name="Documento" Type="Int32" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Perfil" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Empresa1" Relationship="Self.FK_Usuarios_Empresas" FromRole="Usuarios" ToRole="Empresas" />
+          <NavigationProperty Name="Perfile" Relationship="Self.FK_Usuarios_Perfiles" FromRole="Usuarios" ToRole="Perfiles" />
+        </EntityType>
+        <Association Name="FK_Empresas_Ciudades">
+          <End Role="Ciudades" Type="Self.Ciudade" Multiplicity="0..1" />
+          <End Role="Empresas" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudades">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empresas">
+              <PropertyRef Name="Ciudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conferencia_Salones">
+          <End Role="Salones" Type="Self.Salone" Multiplicity="1" />
+          <End Role="Conferencia" Type="Self.Conferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salones">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferencia">
+              <PropertyRef Name="Salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Empresas">
+          <End Role="Empresas" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expositores_Pais">
+          <End Role="Pais" Type="Self.Pai" Multiplicity="1" />
+          <End Role="Expositor" Type="Self.Expositor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Expositor">
+              <PropertyRef Name="Pais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Salones_Lugar">
+          <End Role="Lugar" Type="Self.Lugar" Multiplicity="1" />
+          <End Role="Salones" Type="Self.Salone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lugar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Salones">
+              <PropertyRef Name="Lugar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfile" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExpositoresXConferencia">
+          <End Role="Conferencia" Type="Self.Conferencia" Multiplicity="*" />
+          <End Role="Expositor" Type="Self.Expositor" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CongresoAcodalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ciudades" EntityType="Self.Ciudade" />
+          <EntitySet Name="Conferencias" EntityType="Self.Conferencia" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresa" />
+          <EntitySet Name="Expositors" EntityType="Self.Expositor" />
+          <EntitySet Name="Lugars" EntityType="Self.Lugar" />
+          <EntitySet Name="Pais" EntityType="Self.Pai" />
+          <EntitySet Name="Perfiles" EntityType="Self.Perfile" />
+          <EntitySet Name="Salones" EntityType="Self.Salone" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Empresas_Ciudades" Association="Self.FK_Empresas_Ciudades">
+            <End Role="Ciudades" EntitySet="Ciudades" />
+            <End Role="Empresas" EntitySet="Empresas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conferencia_Salones" Association="Self.FK_Conferencia_Salones">
+            <End Role="Salones" EntitySet="Salones" />
+            <End Role="Conferencia" EntitySet="Conferencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Empresas" Association="Self.FK_Usuarios_Empresas">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expositores_Pais" Association="Self.FK_Expositores_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Expositor" EntitySet="Expositors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Salones_Lugar" Association="Self.FK_Salones_Lugar">
+            <End Role="Lugar" EntitySet="Lugars" />
+            <End Role="Salones" EntitySet="Salones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="Self.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="ExpositoresXConferencia" Association="Self.ExpositoresXConferencia">
+            <End Role="Conferencia" EntitySet="Conferencias" />
+            <End Role="Expositor" EntitySet="Expositors" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CongresoAcodalModelStoreContainer" CdmEntityContainer="CongresoAcodalEntities">
+          <EntitySetMapping Name="Ciudades">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Ciudade">
+              <MappingFragment StoreEntitySet="Ciudades">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conferencias">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Conferencia">
+              <MappingFragment StoreEntitySet="Conferencia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+                <ScalarProperty Name="Salon" ColumnName="Salon" />
+                <ScalarProperty Name="DescripcionDetallada" ColumnName="DescripcionDetallada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="RepresentanteLegal" ColumnName="RepresentanteLegal" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expositors">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Expositor">
+              <MappingFragment StoreEntitySet="Expositor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Titulos" ColumnName="Titulos" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Linked" ColumnName="Linked" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="PaginaWeb" ColumnName="PaginaWeb" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lugars">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Lugar">
+              <MappingFragment StoreEntitySet="Lugar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Lugar1" ColumnName="Lugar" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Pai">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfiles">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Perfile">
+              <MappingFragment StoreEntitySet="Perfiles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salones">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Salone">
+              <MappingFragment StoreEntitySet="Salones">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Salon" ColumnName="Salon" />
+                <ScalarProperty Name="Lugar" ColumnName="Lugar" />
+                <ScalarProperty Name="CapacidadPersonas" ColumnName="CapacidadPersonas" />
+                <ScalarProperty Name="MesasNegocios" ColumnName="MesasNegocios" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
+                <ScalarProperty Name="Audio" ColumnName="Audio" />
+                <ScalarProperty Name="Otros" ColumnName="Otros" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="CongresoAcodalModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ExpositoresXConferencia" TypeName="CongresoAcodalModel.ExpositoresXConferencia" StoreEntitySet="ExpositoresXConferencia">
+            <EndProperty Name="Conferencia">
+              <ScalarProperty Name="Id" ColumnName="IdConferencia" />
+            </EndProperty>
+            <EndProperty Name="Expositor">
+              <ScalarProperty Name="ID" ColumnName="IdExpositor" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
